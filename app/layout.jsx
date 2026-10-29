@@ -5,6 +5,7 @@ import SiteShell from "@/components/SiteShell";
 // Headings: Fraunces (sturdy, readable serif with real character). Body: DM Sans at normal weight.
 const fraunces = Fraunces({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
