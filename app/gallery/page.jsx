@@ -1,20 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Expand } from "lucide-react";
 import { useSite } from "@/components/enquiry-context";
-import Lightbox from "@/components/Lightbox";
 import { EASE } from "@/components/motion";
 import { PageHero } from "@/components/ui";
+import { BLUR_DATA_URL } from "@/lib/utils";
+
+const Lightbox = dynamic(() => import("@/components/Lightbox"), { ssr: false });
 
 const RATIOS = ["aspect-[4/5]", "aspect-square", "aspect-[3/4]", "aspect-[4/3]", "aspect-[5/6]"];
+const BATCH_SIZE = 12;
 
 export default function GalleryPage() {
   const { data } = useSite();
   const [cat, setCat] = useState("All");
   const [lb, setLb] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+  const sentinelRef = useRef(null);
 
   const categories = data.categories?.length ? data.categories : ["All"];
   const items = useMemo(() => {
@@ -22,6 +28,32 @@ export default function GalleryPage() {
     const sorted = [...imgs].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     return cat === "All" ? sorted : sorted.filter((g) => g.category === cat);
   }, [data.gallery, cat]);
+
+  // Reset batch count when category changes
+  useEffect(() => {
+    setVisibleCount(BATCH_SIZE);
+  }, [cat]);
+
+  // Progressive reveal as user scrolls near bottom
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || visibleCount >= items.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, items.length));
+        }
+      },
+      { rootMargin: "300px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [visibleCount, items.length]);
+
+  const visibleItems = items.slice(0, visibleCount);
+  const hasMore = visibleCount < items.length;
 
   return (
     <>
@@ -58,21 +90,20 @@ export default function GalleryPage() {
           </div>
         </LayoutGroup>
 
-        <motion.div layout className="columns-2 gap-5 sm:gap-8 lg:columns-3">
+        <div className="columns-2 gap-5 sm:gap-8 lg:columns-3">
           <AnimatePresence mode="popLayout" initial={false}>
-            {items.map((g, i) => (
+            {visibleItems.map((g, i) => (
               <motion.button
-                layout
                 key={g.id}
                 onClick={() => setLb(i)}
                 aria-label={`Open ${g.title}`}
                 className="group relative mb-5 block w-full break-inside-avoid overflow-hidden bg-forest-100 text-left sm:mb-8"
                 style={{ borderRadius: 24 }}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -6% 0px" }}
+                viewport={{ once: true, margin: "0px 0px -4% 0px" }}
                 exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.7, ease: EASE }}
+                transition={{ duration: 0.6, ease: EASE }}
               >
                 <div className={`relative ${RATIOS[i % RATIOS.length]}`}>
                   <Image
@@ -80,6 +111,11 @@ export default function GalleryPage() {
                     alt={g.title || "Wedding decor"}
                     fill
                     sizes="(min-width:1024px) 33vw, 50vw"
+                    priority={i === 0}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    quality={75}
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
                     className="object-cover scale-[1.12] transition-transform duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.2]"
                   />
                 </div>
@@ -94,12 +130,26 @@ export default function GalleryPage() {
               </motion.button>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
+
+        {/* Sentinel for progressive scroll-reveal */}
+        {hasMore && <div ref={sentinelRef} className="h-10 w-full" aria-hidden="true" />}
+
+        {hasMore && (
+          <div className="mt-12 text-center">
+            <button
+              onClick={() => setVisibleCount((c) => Math.min(c + BATCH_SIZE, items.length))}
+              className="btn-gold inline-flex"
+            >
+              Load More Moments ({items.length - visibleCount} remaining)
+            </button>
+          </div>
+        )}
 
         {items.length === 0 && <p className="py-20 text-center text-forest-600">Nothing here yet — check back soon.</p>}
       </section>
 
-      <Lightbox items={items} index={lb} onClose={() => setLb(null)} onIndex={setLb} />
+      {lb !== null && <Lightbox items={items} index={lb} onClose={() => setLb(null)} onIndex={setLb} />}
     </>
   );
 }

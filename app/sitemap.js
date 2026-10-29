@@ -1,5 +1,9 @@
 export default function sitemap() {
-  const baseUrl = "https://www.marrigoldevents.com";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://www.marrigoldevents.com");
 
   return [
     {

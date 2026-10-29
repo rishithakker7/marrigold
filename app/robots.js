@@ -1,4 +1,10 @@
 export default function robots() {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://www.marrigoldevents.com");
+
   return {
     rules: [
       {
@@ -7,7 +13,7 @@ export default function robots() {
         disallow: ["/admin", "/admin/*", "/api/admin", "/api/admin/*"],
       },
     ],
-    sitemap: "https://www.marrigoldevents.com/sitemap.xml",
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
 

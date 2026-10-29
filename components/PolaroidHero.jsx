@@ -7,6 +7,7 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { EASE } from "./motion";
+import { BLUR_DATA_URL } from "@/lib/utils";
 
 /*
  * Polaroid line hero: prints pegged to a sagging gold string. Drag the line,
@@ -340,7 +341,13 @@ export default function PolaroidHero({ slides = [], cardWidth = 300, sag = 46, s
                 alt={sl.title || ""}
                 fill
                 sizes="(max-width: 640px) 60vw, 320px"
-                priority={i < 3}
+                priority={i === 0}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                decoding={i === 0 ? "sync" : "async"}
+                quality={75}
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
                 draggable={false}
               />
             </div>
@@ -459,8 +466,17 @@ function PrintLightbox({ slide, onClose }) {
         transition={{ duration: 0.4, ease: EASE }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={slide.image} alt={slide.title || ""} className="block max-h-[82vh] max-w-[88vw] object-contain" draggable={false} />
+        <Image
+          src={slide.image}
+          alt={slide.title || ""}
+          width={1600}
+          height={1200}
+          className="block max-h-[82vh] max-w-[88vw] w-auto h-auto object-contain"
+          quality={80}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+        />
       </motion.div>
     </motion.div>,
     document.body

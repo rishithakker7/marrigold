@@ -39,3 +39,6 @@ next-env.d.ts
 # crawl scratch
 /crawl
 /downloaded_assets
+
+# image optimization backups
+/image-backups

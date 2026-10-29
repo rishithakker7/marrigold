@@ -18,8 +18,14 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://www.marrigoldevents.com");
+
 export const metadata = {
-  metadataBase: new URL("https://www.marrigoldevents.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Marrigold Events | Luxury Wedding Planning & Decor Atelier",
     template: "%s | Marrigold Events",
@@ -45,18 +51,22 @@ export const metadata = {
     title: "Marrigold Events | Luxury Wedding Planning & Decor Atelier",
     description:
       "Marrigold Events is Mumbai's premier bespoke wedding planning, in-house DIY decor artistry, and destination wedding atelier based in Mulund West.",
-    url: "https://www.marrigoldevents.com",
+    url: siteUrl,
     siteName: "Marrigold Events",
     images: [
       {
-        url: "/images/slider2.JPG",
-        width: 1200,
-        height: 630,
-        alt: "Marrigold Events Luxury Wedding Design",
+        url: "/images/Chat-Logo.png",
+        width: 1882,
+        height: 836,
+        alt: "Marrigold Events",
       },
     ],
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/Chat-Logo.png"],
   },
 };
 
@@ -73,8 +83,8 @@ const jsonLd = {
   name: "Marrigold Events",
   description:
     "Bespoke wedding planning, in-house decor artistry and destination wedding curation in Mulund West, Mumbai.",
-  url: "https://www.marrigoldevents.com",
-  image: "https://www.marrigoldevents.com/images/slider2.JPG",
+  url: siteUrl,
+  image: `${siteUrl}/images/Chat-Logo.png`,
   telephone: "+919326787480",
   email: "parul@marrigoldevents.com",
   address: {

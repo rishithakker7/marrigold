@@ -1,8 +1,10 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { initialSiteData } from "@/lib/data.js";
-import EnquiryDrawer from "./EnquiryDrawer";
+
+const EnquiryDrawer = dynamic(() => import("./EnquiryDrawer"), { ssr: false });
 
 const SiteContext = createContext(null);
 

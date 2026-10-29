@@ -1,14 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useSite } from "@/components/enquiry-context";
 import PolaroidHero from "@/components/PolaroidHero";
-import Lightbox from "@/components/Lightbox";
 import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { Ornament, SectionHeading } from "@/components/ui";
+import { BLUR_DATA_URL } from "@/lib/utils";
+
+const Lightbox = dynamic(() => import("@/components/Lightbox"), { ssr: false });
 
 const PROCESS = [
   ["01", "Conversation", "We begin by listening — your families, your traditions, the feeling you want guests to carry home."],
@@ -82,6 +85,10 @@ export default function HomePage() {
                     alt={sv.title}
                     fill
                     sizes="(min-width:768px) 33vw, 100vw"
+                    quality={75}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL={BLUR_DATA_URL}
                     className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/30 to-transparent" />
@@ -127,6 +134,10 @@ export default function HomePage() {
                       alt={g.title || "Wedding decor"}
                       fill
                       sizes="(min-width:1024px) 33vw, 50vw"
+                      quality={75}
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA_URL}
                       className="object-cover scale-[1.12] transition-transform duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.2]"
                     />
                   </div>
@@ -139,7 +150,7 @@ export default function HomePage() {
           </Stagger>
         </section>
       )}
-      <Lightbox items={featured} index={lb} onClose={() => setLb(null)} onIndex={setLb} />
+      {lb !== null && <Lightbox items={featured} index={lb} onClose={() => setLb(null)} onIndex={setLb} />}
 
       {/* Stats from real data */}
       {stats.length > 0 && (

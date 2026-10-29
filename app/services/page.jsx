@@ -7,6 +7,7 @@ import { ArrowRight, Plus } from "lucide-react";
 import { useSite } from "@/components/enquiry-context";
 import { EASE } from "@/components/motion";
 import { PageHero } from "@/components/ui";
+import { BLUR_DATA_URL } from "@/lib/utils";
 
 const enquiryLabel = (id) =>
   id === "destination-wedding" ? "Destination Wedding" : id === "decorator" ? "Artisanal Decor & DIY Styling" : undefined;
@@ -121,7 +122,18 @@ export default function ServicesPage() {
                         animate={{ scale: 1 }}
                         transition={{ duration: 1.6, ease: EASE }}
                       >
-                        <Image src={active.image} alt={active.title} fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover" />
+                        <Image
+                          src={active.image}
+                          alt={active.title}
+                          fill
+                          sizes="(min-width:1024px) 40vw, 100vw"
+                          priority
+                          fetchPriority="high"
+                          quality={80}
+                          placeholder="blur"
+                          blurDataURL={BLUR_DATA_URL}
+                          className="object-cover"
+                        />
                       </motion.div>
                     </motion.div>
                     <motion.div

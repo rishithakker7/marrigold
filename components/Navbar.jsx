@@ -122,6 +122,8 @@ export default function Navbar() {
               width={400}
               height={118}
               priority
+              sizes="(max-width: 640px) 160px, 240px"
+              quality={85}
               className={`w-auto object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)] transition-[height] duration-500 ${
                 scrolled ? "h-[clamp(1.75rem,7vw,3rem)]" : "h-[clamp(2rem,8vw,3.5rem)]"
               }`}

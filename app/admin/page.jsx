@@ -31,6 +31,71 @@ import {
 import { initialSiteData } from "@/lib/data.js";
 import { cn } from "@/lib/utils.js";
 
+/**
+ * Client-side compression for CMS image uploads:
+ * Downscales images wider or taller than 2000px down to 2000px (preserving aspect ratio)
+ * and re-encodes at 0.8 quality via HTML5 Canvas.
+ * Keeps uploads snappy, well below Vercel's 4MB limit. Skips videos, GIFs, and SVGs.
+ */
+async function compressImageClient(file, maxDimension = 2000, quality = 0.8) {
+  if (!file || !file.type?.startsWith("image/") || file.type === "image/gif" || file.type === "image/svg+xml") {
+    return file;
+  }
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onload = () => {
+        let width = img.naturalWidth || img.width;
+        let height = img.naturalHeight || img.height;
+
+        if (width <= maxDimension && height <= maxDimension && file.size < 1.5 * 1024 * 1024) {
+          return resolve(file);
+        }
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const isPng = file.type === "image/png";
+        const outputType = isPng ? "image/jpeg" : file.type === "image/webp" ? "image/webp" : "image/jpeg";
+        const newFileName = file.name.replace(/\.[^/.]+$/, "") + (outputType === "image/webp" ? ".webp" : ".jpg");
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob || blob.size >= file.size) {
+              return resolve(file);
+            }
+            const compressedFile = new File([blob], newFileName, {
+              type: outputType,
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          },
+          outputType,
+          quality
+        );
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("gallery");
@@ -142,7 +207,14 @@ export default function AdminDashboardPage() {
 
     try {
       for (let i = 0; i < uploadFiles.length; i++) {
-        const file = uploadFiles[i];
+        let file = uploadFiles[i];
+        if (file.type?.startsWith("image/")) {
+          try {
+            file = await compressImageClient(file);
+          } catch (cErr) {
+            console.warn("Client compression fallback:", cErr);
+          }
+        }
         const formData = new FormData();
         formData.append("file", file);
 
@@ -278,7 +350,15 @@ export default function AdminDashboardPage() {
 
   const [heroBusy, setHeroBusy] = useState(false);
 
-  const uploadImageFile = async (file) => {
+  const uploadImageFile = async (rawFile) => {
+    let file = rawFile;
+    if (file?.type?.startsWith("image/")) {
+      try {
+        file = await compressImageClient(file);
+      } catch (cErr) {
+        console.warn("Client compression fallback:", cErr);
+      }
+    }
     const fd = new FormData();
     fd.append("file", file);
     const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
@@ -441,6 +521,8 @@ export default function AdminDashboardPage() {
               src="/images/logo.png"
               alt="Marrigold Events"
               fill
+              sizes="160px"
+              priority
               className="object-contain"
             />
           </div>

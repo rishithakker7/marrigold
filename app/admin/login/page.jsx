@@ -86,6 +86,8 @@ export default function AdminLoginPage() {
               alt="Marrigold Events"
               fill
               priority
+              sizes="208px"
+              quality={85}
               className="object-contain"
             />
           </div>
