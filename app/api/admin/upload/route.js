@@ -46,6 +46,17 @@ export async function POST(req) {
       );
     }
 
+    // Check storage configuration on Vercel
+    if (process.env.VERCEL && !process.env.BLOB_READ_WRITE_TOKEN && !process.env.PRIVATE_BLOB_READ_WRITE_TOKEN) {
+      return NextResponse.json(
+        {
+          error:
+            "Vercel Blob Storage is not connected yet. In your Vercel Dashboard, go to Storage -> Create Blob to enable photo uploads.",
+        },
+        { status: 503 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
@@ -59,7 +70,10 @@ export async function POST(req) {
     });
   } catch (err) {
     console.error("Upload error:", err);
-    return NextResponse.json({ error: "Failed to upload file" }, { status: 500 });
+    return NextResponse.json(
+      { error: err?.message || "Failed to upload file" },
+      { status: 500 }
+    );
   }
 }
 

@@ -42,6 +42,16 @@ async function compressImageClient(file, maxDimension = 2000, quality = 0.8) {
     return file;
   }
   return new Promise((resolve) => {
+    let finished = false;
+    const done = (result) => {
+      if (!finished) {
+        finished = true;
+        resolve(result);
+      }
+    };
+    // 3.5s safety timeout ensures UI never gets stuck
+    setTimeout(() => done(file), 3500);
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new window.Image();
@@ -50,7 +60,7 @@ async function compressImageClient(file, maxDimension = 2000, quality = 0.8) {
         let height = img.naturalHeight || img.height;
 
         if (width <= maxDimension && height <= maxDimension && file.size < 1.5 * 1024 * 1024) {
-          return resolve(file);
+          return done(file);
         }
 
         if (width > maxDimension || height > maxDimension) {
@@ -76,22 +86,22 @@ async function compressImageClient(file, maxDimension = 2000, quality = 0.8) {
         canvas.toBlob(
           (blob) => {
             if (!blob || blob.size >= file.size) {
-              return resolve(file);
+              return done(file);
             }
             const compressedFile = new File([blob], newFileName, {
               type: outputType,
               lastModified: Date.now(),
             });
-            resolve(compressedFile);
+            done(compressedFile);
           },
           outputType,
           quality
         );
       };
-      img.onerror = () => resolve(file);
+      img.onerror = () => done(file);
       img.src = e.target.result;
     };
-    reader.onerror = () => resolve(file);
+    reader.onerror = () => done(file);
     reader.readAsDataURL(file);
   });
 }
