@@ -38,7 +38,10 @@ export async function POST(req) {
     return NextResponse.json({ success: true, message: "Authentication successful" });
   } catch (err) {
     console.error("Login error:", err);
-    return NextResponse.json({ error: "Server error occurred" }, { status: 500 });
+    return NextResponse.json(
+      { error: err?.message || "Server error occurred" },
+      { status: 500 }
+    );
   }
 }
 
