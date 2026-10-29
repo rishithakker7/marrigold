@@ -191,11 +191,11 @@ export default function AdminDashboardPage() {
       if (res.ok) {
         showToast("Changes saved and live across the site!");
       } else {
-        const err = await res.json();
-        showToast(err.error || "Failed to save changes", "error");
+        const err = await res.json().catch(() => ({}));
+        showToast(err.error || `Failed to save changes (${res.status})`, "error");
       }
-    } catch {
-      showToast("Network error while saving content.", "error");
+    } catch (e) {
+      showToast(e?.message || "Network error while saving content.", "error");
     } finally {
       setIsSaving(false);
     }
