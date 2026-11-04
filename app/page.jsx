@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useSite } from "@/components/enquiry-context";
 import PolaroidHero from "@/components/PolaroidHero";
-import { CountUp, Reveal, Stagger, StaggerItem } from "@/components/motion";
+import { CountUp, Reveal, RevealText, Stagger, StaggerItem } from "@/components/motion";
 import { Ornament, SectionHeading } from "@/components/ui";
 import { BLUR_DATA_URL } from "@/lib/utils";
 
@@ -67,6 +67,62 @@ export default function HomePage() {
               "From the first conversation to the final farewell, we design, build and run celebrations that feel personal, effortless and unforgettable."}
           </p>
         </Reveal>
+      </section>
+
+      {/* About / founder */}
+      <section className="mx-auto max-w-7xl px-6 pb-24 sm:px-8 sm:pb-32">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
+          <Reveal className="lg:col-span-5" y={40}>
+            <div className="relative mx-auto max-w-sm lg:max-w-none">
+              <div className="relative aspect-[3/4] overflow-hidden bg-forest-900 shadow-lift">
+                <Image
+                  src="/images/founder-parul.jpg"
+                  alt="Parul Daftary, Founder and Director of Marrigold Events"
+                  fill
+                  sizes="(min-width:1024px) 40vw, 90vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 -z-10 h-full w-full border border-gold-500/60" />
+              <div className="absolute -left-3 bottom-8 bg-forest-950 px-5 py-4 text-center shadow-lift sm:-left-8">
+                <div className="font-serif text-5xl font-medium leading-none gold-gradient-text">25</div>
+                <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream-100">Years of<br />Marrigold</div>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="space-y-7 lg:col-span-7">
+            <Reveal>
+              <span className="eyebrow">Meet the Founder</span>
+            </Reveal>
+            <RevealText
+              as="h2"
+              text="From florist to wedding visionary."
+              className="font-serif text-4xl font-medium leading-[1.05] text-forest-950 sm:text-5xl lg:text-6xl"
+            />
+            <Reveal delay={0.1}>
+              <p className="text-lg leading-relaxed text-forest-800">
+                Marrigold began with flowers. Parul Daftary trained for five years as an instructor at the Ohara School of Ikebana,
+                then grew her floral artistry into large-scale decor and wedding planning, working with some of the country&apos;s most
+                prestigious five-star hotels along the way.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <blockquote className="border-l-2 border-gold-500 pl-6 font-serif text-2xl font-medium italic leading-snug text-forest-950">
+                &ldquo;Flowers taught me detail, freshness, and balance.&rdquo;
+                <footer className="mt-3 font-sans text-xs font-semibold not-italic uppercase tracking-[0.2em] text-gold-700">
+                  Parul Daftary, Founder &amp; Director
+                </footer>
+              </blockquote>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <Link href="/about" className="btn-dark">
+                Read Our Story
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* Services */}

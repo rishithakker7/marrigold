@@ -260,7 +260,7 @@ export default function PolaroidHero({ slides = [], cardWidth = 300, sag = 46, s
   return (
     <section
       ref={rootRef}
-      className="pl-root grain bg-forest-950"
+      className="pl-root grain bg-[#154215]"
       style={{ height: "100svh", minHeight: 660, ["--pl-cw"]: size.cw + "px" }}
       data-drag={dragging ? "1" : "0"}
       aria-roledescription="carousel"
@@ -274,8 +274,9 @@ export default function PolaroidHero({ slides = [], cardWidth = 300, sag = 46, s
     >
       <style>{PL_CSS}</style>
 
-      {/* Backdrop: warm gold glow behind the heading, deep green falling away below */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_30%,rgba(203,166,39,0.17),transparent_70%),radial-gradient(110%_70%_at_50%_115%,rgba(43,82,61,0.55),transparent_65%)]" />
+      {/* Backdrop: the green artwork, full height, anchored to the bottom so its gold design is always visible */}
+      <Image src="/images/new-green-bg.png" alt="" fill priority sizes="100vw" className="pointer-events-none select-none object-cover object-bottom" draggable={false} />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/35 to-transparent" />
 
       {/* Heading zone (above the string) */}
       <div
@@ -472,9 +473,7 @@ function PrintLightbox({ slide, onClose }) {
           width={1600}
           height={1200}
           className="block max-h-[82vh] max-w-[88vw] w-auto h-auto object-contain"
-          quality={80}
-          loading="lazy"
-          decoding="async"
+          unoptimized
           draggable={false}
         />
       </motion.div>
