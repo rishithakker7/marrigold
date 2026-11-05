@@ -11,7 +11,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { ArrowRight, Instagram } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useSite } from "@/components/enquiry-context";
 import { CountUp, EASE, Magnetic, Reveal, RevealText, Stagger, StaggerItem } from "@/components/motion";
 import { Ornament, PageHero, SectionHeading } from "@/components/ui";
@@ -371,7 +371,7 @@ export default function AboutPage() {
                   {insta && (
                     <Magnetic>
                       <a href={insta} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                        <Instagram className="h-4 w-4" />
+                        <img src="/images/icons/instagram.svg" alt="" className="h-4 w-4 object-contain" aria-hidden="true" />
                         @marrigoldevents
                       </a>
                     </Magnetic>

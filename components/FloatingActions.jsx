@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
 import { useSite } from "./enquiry-context";
 import { EASE } from "./motion";
 
@@ -39,7 +38,12 @@ export default function FloatingActions() {
           whileTap={{ scale: 0.92 }}
         >
           <span className="animate-ring absolute inset-0 rounded-full bg-[#25D366]" aria-hidden="true" />
-          <MessageCircle className="relative h-6 w-6" />
+          <img
+            src="/images/icons/whatsapp.svg"
+            alt=""
+            className="relative h-7 w-7 brightness-0 invert"
+            aria-hidden="true"
+          />
         </motion.a>
       )}
     </AnimatePresence>

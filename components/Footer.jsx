@@ -1,26 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useSite } from "./enquiry-context";
 import { Reveal } from "./motion";
-
-function Pinterest(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M12 2a10 10 0 0 0-3.64 19.3c-.09-.82-.17-2.08.03-2.98l1.2-5.08s-.3-.61-.3-1.52c0-1.42.83-2.49 1.86-2.49.88 0 1.3.66 1.3 1.45 0 .88-.56 2.2-.85 3.43-.24 1.02.52 1.86 1.52 1.86 1.83 0 3.23-1.93 3.23-4.7 0-2.46-1.77-4.18-4.29-4.18-2.92 0-4.64 2.19-4.64 4.45 0 .88.34 1.83.76 2.34.08.1.09.19.07.29l-.28 1.16c-.04.18-.15.22-.34.13-1.28-.6-2.08-2.47-2.08-3.97 0-3.23 2.35-6.2 6.78-6.2 3.56 0 6.33 2.54 6.33 5.93 0 3.54-2.23 6.39-5.33 6.39-1.04 0-2.02-.54-2.35-1.18l-.64 2.44c-.23.89-.86 2-1.28 2.68A10 10 0 1 0 12 2z" />
-    </svg>
-  );
-}
 
 export default function Footer() {
   const { data, openEnquiry } = useSite();
   const c = data.contact || {};
   const s = c.socials || {};
   const social = [
-    { href: s.instagram, label: "Instagram", Icon: Instagram },
-    { href: s.facebook, label: "Facebook", Icon: Facebook },
-    { href: s.pinterest, label: "Pinterest", Icon: Pinterest },
+    { href: s.instagram, label: "Instagram", src: "/images/icons/instagram.svg" },
+    { href: s.facebook, label: "Facebook", src: "/images/icons/facebook.svg" },
+    { href: s.pinterest, label: "Pinterest", src: "/images/icons/pinterest.svg" },
   ].filter((x) => x.href);
 
   return (
@@ -45,7 +37,7 @@ export default function Footer() {
               Bespoke wedding planning, in-house decor artistry and destination celebrations, crafted from our atelier in Mulund West, Mumbai.
             </p>
             <div className="flex gap-3 pt-2">
-              {social.map(({ href, label, Icon }) => (
+              {social.map(({ href, label, src }) => (
                 <a
                   key={label}
                   href={href}
@@ -54,7 +46,7 @@ export default function Footer() {
                   aria-label={label}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-forest-700 text-forest-200 transition-[color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-gold-400 hover:text-gold-300"
                 >
-                  <Icon className="h-4 w-4" />
+                  <img src={src} alt="" className="h-5 w-5 object-contain" aria-hidden="true" />
                 </a>
               ))}
             </div>
