@@ -42,3 +42,11 @@ next-env.d.ts
 
 # image optimization backups
 /image-backups
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example

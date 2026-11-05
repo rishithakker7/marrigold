@@ -129,7 +129,7 @@ export default function ServicesPage() {
                           sizes="(min-width:1024px) 40vw, 100vw"
                           priority
                           fetchPriority="high"
-                          quality={80}
+                          quality={75}
                           placeholder="blur"
                           blurDataURL={BLUR_DATA_URL}
                           className="object-cover"

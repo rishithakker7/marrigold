@@ -19,6 +19,7 @@ export default function AdminLoginPage() {
         if (data.authenticated) {
           router.replace("/admin");
         }
+
       })
       .catch(() => {});
   }, [router]);
@@ -87,7 +88,7 @@ export default function AdminLoginPage() {
               fill
               priority
               sizes="208px"
-              quality={85}
+              quality={75}
               className="object-contain"
             />
           </div>
@@ -151,4 +152,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-
