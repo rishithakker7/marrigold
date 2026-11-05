@@ -19,7 +19,7 @@ export function SiteProvider({ children }) {
 
   useEffect(() => {
     let alive = true;
-    fetch("/api/admin/content")
+    fetch("/api/admin/content", { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((live) => {
         if (alive && live) setData(live);
