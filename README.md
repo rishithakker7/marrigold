@@ -21,11 +21,10 @@ npm run start
 ```env
 RESEND_API_KEY=""
 CONTACT_FROM_EMAIL="Marrigold Events <hello@marrigoldevents.com>"
-CONTACT_RECEIVER_EMAIL="parul@marrigoldevents.com"
 NEXT_PUBLIC_SITE_URL="https://www.marrigoldevents.com"
 ```
 
-The sender domain must be verified in Resend. If email delivery fails, the contact form returns an error and asks visitors to contact Marrigold Events through WhatsApp.
+All contact and enquiry form emails are sent to `parul@marrigoldevents.com`. The sender domain must be verified in Resend. If email delivery fails, the contact form returns an error and asks visitors to contact Marrigold Events through WhatsApp.
 
 ## Content
 

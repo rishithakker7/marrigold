@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const POLICY_VERSION = "2026-10-29";
+const CONTACT_RECIPIENT = "parul@marrigoldevents.com";
 const ipSubmissions = new Map();
 
 const esc = (value) =>
@@ -48,7 +49,7 @@ export async function POST(req) {
     if (!/^[0-9+()\-\s]{7,20}$/.test(phone) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Please enter valid contact details." }, { status: 400 });
     }
-    if (!process.env.RESEND_API_KEY || !process.env.CONTACT_FROM_EMAIL || !process.env.CONTACT_RECEIVER_EMAIL) {
+    if (!process.env.RESEND_API_KEY || !process.env.CONTACT_FROM_EMAIL) {
       console.error("Contact email is not configured.");
       return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
@@ -60,7 +61,7 @@ export async function POST(req) {
 
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL,
-      to: process.env.CONTACT_RECEIVER_EMAIL,
+      to: CONTACT_RECIPIENT,
       subject: `New Wedding Enquiry: ${name.replace(/[\r\n]+/g, " ")} (${serviceInterest.replace(/[\r\n]+/g, " ")})`,
       html: `
         <h2>New Wedding Celebration Enquiry</h2>
