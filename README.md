@@ -17,6 +17,8 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+If the dev server ever shows a stale `Cannot find module './*.js'` / intermittent 500 from `/`, stop the process and rerun it. The project clears the Next.js cache automatically before starting to avoid corrupted `.next` state.
+
 ### Production Build
 ```bash
 npm run build
@@ -84,8 +86,8 @@ Enter your new plain password. Paste the resulting hash into `ADMIN_INITIAL_PASS
   * `/` — Interactive hero slider (4 verified slides), welcome statement, 3 core pillars, curated photo highlights, trust pillars, consultation banner.
   * `/about` — Dedicated story of Parul Daftary, Mulund studio, and the in-house DIY decor artisan team.
   * `/services` — Interactive tabbed showcase of **Wedding Planning** (4 scopes), **Artisanal Decorator** (in-house DIY decor), and **Destination Weddings** (all 9 full offerings).
-  * `/gallery` — Filterable categories (Reception, Mehendi, Wedding, Sangeet, Custom Themes), 43+ high-resolution photos, lightbox with video playback support.
-  * `/contact` — Mulund West studio details, phones (+91 9326787480 / 9619939848), email, interactive Google Maps embed, and a rate-limited contact form with honeypot bot trap.
+  * `/gallery` — Filterable Passage, Stage, and Mandap collections, with a lightbox for viewing optimized WebP photos.
+  * `/contact` — Mulund West studio details, phones (+91 9326787480 / +91 89289 90680), email, interactive Google Maps embed, and a rate-limited contact form with honeypot bot trap.
 * **Studio CMS (`/admin`):**
   * **Gallery & Media:** Drag-and-drop multi-file upload for photos (JPG, PNG, WebP) and videos (MP4, WebM, MOV), category organizer, caption editing, reordering, and "feature on home" toggle.
   * **Page Content:** Live editing of slider slides, tagline, about story, and contact details.
@@ -94,4 +96,3 @@ Enter your new plain password. Paste the resulting hash into `ADMIN_INITIAL_PASS
 * **Persistence:**
   * Uses `@vercel/blob` for production persistence of uploads, content JSON, and changed client password hashes.
   * Seamless local filesystem fallback during offline development.
-

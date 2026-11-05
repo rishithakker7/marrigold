@@ -23,6 +23,15 @@ export default function GalleryPage() {
   const sentinelRef = useRef(null);
 
   const categories = data.categories?.length ? data.categories : ["All"];
+
+  useEffect(() => {
+    const requestedCategory = new URLSearchParams(window.location.search).get("category");
+    if (requestedCategory && categories.includes(requestedCategory)) {
+      setCat(requestedCategory);
+      requestAnimationFrame(() => document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" }));
+    }
+  }, [categories]);
+
   const items = useMemo(() => {
     const imgs = (data.gallery || []).filter((g) => g.type !== "video");
     const sorted = [...imgs].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -63,7 +72,7 @@ export default function GalleryPage() {
         text="A glimpse into the celebrations we've designed — from intimate mehendis to grand receptions."
       />
 
-      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-10 sm:py-28">
+      <section id="gallery" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 sm:px-10 sm:py-28">
         <LayoutGroup>
           <div className="-mx-5 mb-16 flex gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0" role="tablist">
             {categories.map((c) => (

@@ -12,7 +12,7 @@ export default function Footer() {
   const social = [
     { href: s.instagram, label: "Instagram", src: "/images/icons/instagram.svg" },
     { href: s.facebook, label: "Facebook", src: "/images/icons/facebook.svg" },
-    { href: s.pinterest, label: "Pinterest", src: "/images/icons/pinterest.svg" },
+    { href: s.whatsapp, label: "WhatsApp", src: "/images/icons/whatsapp.svg" },
   ].filter((x) => x.href);
 
   return (

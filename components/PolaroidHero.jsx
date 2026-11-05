@@ -275,7 +275,7 @@ export default function PolaroidHero({ slides = [], cardWidth = 300, sag = 46, s
       <style>{PL_CSS}</style>
 
       {/* Backdrop: the green artwork, full height, anchored to the bottom so its gold design is always visible */}
-      <Image src="/images/new-green-bg.png" alt="" fill priority sizes="100vw" className="pointer-events-none select-none object-cover object-bottom" draggable={false} />
+      <Image src="/images/new-green-bg.png" alt="" fill priority sizes="100vw" className="pointer-events-none select-none object-fill" draggable={false} />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/35 to-transparent" />
 
       {/* Heading zone (above the string) */}

@@ -84,7 +84,7 @@ const jsonLd = {
     "Bespoke wedding planning, in-house decor artistry and destination wedding curation in Mulund West, Mumbai.",
   url: siteUrl,
   image: `${siteUrl}/images/Chat-Logo.png`,
-  telephone: "+919326787480",
+  telephone: "+918928990680",
   email: "parul@marrigoldevents.com",
   address: {
     "@type": "PostalAddress",

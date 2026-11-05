@@ -9,7 +9,7 @@ export const metadata = {
 
 const UPDATED = "29 October 2026";
 const EMAIL = "parul@marrigoldevents.com";
-const PHONES = ["+91 9326787480", "+91 9619939848"];
+const PHONES = ["+91 9326787480", "+91 89289 90680"];
 const ADDRESS = "2402, Marathon Monte Vista, M.M. Marg, opp. Telephone Exchange, Mulund West, Mumbai 400080";
 
 const H2 = "mt-12 font-serif text-3xl font-normal text-forest-950";
