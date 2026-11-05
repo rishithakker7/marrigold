@@ -107,9 +107,6 @@ export default function Footer() {
               Privacy Policy
             </Link>
             <span>Mulund West · Mumbai</span>
-            <Link href="/admin/login" className="rounded-full border border-forest-700 px-3 py-1 font-semibold uppercase tracking-[0.14em] text-forest-300 transition-colors hover:border-gold-400 hover:text-gold-300">
-              CMS
-            </Link>
           </span>
         </div>
       </div>

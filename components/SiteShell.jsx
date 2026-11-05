@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { SiteProvider } from "./enquiry-context";
 import Navbar from "./Navbar";
@@ -9,11 +8,8 @@ import FloatingActions from "./FloatingActions";
 
 /** Wraps public pages with chrome. Admin routes keep their own layout. */
 export default function SiteShell({ children }) {
-  const pathname = usePathname() || "";
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
-
-  if (pathname.startsWith("/admin")) return children;
 
   return (
     <SiteProvider>

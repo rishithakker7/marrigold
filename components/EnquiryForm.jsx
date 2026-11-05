@@ -55,10 +55,10 @@ export default function EnquiryForm({ defaultService, onSuccess }) {
         setForm(blank(defaultService));
         if (onSuccess) setTimeout(onSuccess, 3000);
       } else {
-        setStatus({ type: "error", msg: json.error || "Unable to send enquiry. Please try again." });
+        setStatus({ type: "error", msg: json.error || "Something went wrong, please WhatsApp us." });
       }
     } catch {
-      setStatus({ type: "error", msg: "A connection error occurred. Please call us directly." });
+      setStatus({ type: "error", msg: "Something went wrong, please WhatsApp us." });
     } finally {
       setBusy(false);
     }
