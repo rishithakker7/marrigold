@@ -18,10 +18,7 @@ const dmSans = DM_Sans({
 });
 
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://www.marrigoldevents.com");
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.marrigoldevents.com";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),

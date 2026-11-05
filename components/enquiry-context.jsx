@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { initialSiteData } from "@/lib/data.js";
 
@@ -9,26 +9,12 @@ const EnquiryDrawer = dynamic(() => import("./EnquiryDrawer"), { ssr: false });
 const SiteContext = createContext(null);
 
 /**
- * Provides live site content (admin overrides) and one shared enquiry drawer,
+ * Provides static site content and one shared enquiry drawer,
  * so every "Enquire" button on every page opens the same panel.
  */
 export function SiteProvider({ children }) {
-  const [data, setData] = useState(initialSiteData);
   const [open, setOpen] = useState(false);
   const [service, setService] = useState(null);
-
-  useEffect(() => {
-    let alive = true;
-    fetch("/api/admin/content", { cache: "no-store" })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((live) => {
-        if (alive && live) setData(live);
-      })
-      .catch(() => {});
-    return () => {
-      alive = false;
-    };
-  }, []);
 
   const openEnquiry = useCallback((svc) => {
     setService(typeof svc === "string" ? svc : null);
@@ -37,8 +23,8 @@ export function SiteProvider({ children }) {
   const closeEnquiry = useCallback(() => setOpen(false), []);
 
   const value = useMemo(
-    () => ({ data, openEnquiry, closeEnquiry }),
-    [data, openEnquiry, closeEnquiry]
+    () => ({ data: initialSiteData, openEnquiry, closeEnquiry }),
+    [openEnquiry, closeEnquiry]
   );
 
   return (
