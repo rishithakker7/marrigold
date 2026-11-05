@@ -275,9 +275,15 @@ export default function AboutPage() {
       {/* Quote: parallax photo, words light up as you scroll */}
       <section ref={quoteRef} className="grain relative overflow-hidden bg-forest-950 py-32 sm:py-44">
         <motion.div style={{ y: bgY }} className="absolute inset-x-0 -inset-y-[12%]">
-          <Image src="/images/about-mandap.jpg" alt="" fill sizes="100vw" className="object-cover opacity-50" />
+          <Image
+            src="/images/new-green-bg-wo-design.png"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-70"
+          />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-forest-950 via-forest-950/55 to-forest-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-950/75 via-forest-950/35 to-forest-950/75" />
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <Reveal>
             <span className="eyebrow-dark">In Her Words</span>
