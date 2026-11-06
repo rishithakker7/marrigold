@@ -62,6 +62,7 @@ export async function POST(req) {
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL,
       to: CONTACT_RECIPIENT,
+      replyTo: email,
       subject: `New Wedding Enquiry: ${name.replace(/[\r\n]+/g, " ")} (${serviceInterest.replace(/[\r\n]+/g, " ")})`,
       html: `
         <h2>New Wedding Celebration Enquiry</h2>
