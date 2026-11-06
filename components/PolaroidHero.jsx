@@ -56,6 +56,8 @@ const PL_CSS = [
   ".pl-note{height:46px;display:flex;align-items:center;justify-content:center;padding:0 6px;font-family:var(--font-display),Georgia,serif;font-style:italic;font-size:16px;color:#3b3833;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
   ".pl-peg{position:absolute;left:50%;top:0;width:10px;height:26px;margin-left:-5px;border-radius:2px;background:linear-gradient(90deg,#b8891f,#e8d385 45%,#a67a14);box-shadow:0 2px 3px rgba(0,0,0,.4)}",
   ".pl-peg::after{content:'';position:absolute;left:4px;top:8px;width:2px;height:7px;background:rgba(60,40,5,.5);border-radius:1px}",
+  ".pl-backdrop{object-fit:fill;object-position:center center}",
+  "@media (max-width:1024px){.pl-backdrop{object-fit:cover;object-position:center center}}",
 ].join("\n");
 
 const BAR_H = 112; // room kept free at the bottom for the button + arrows
@@ -275,7 +277,7 @@ export default function PolaroidHero({ slides = [], cardWidth = 300, sag = 46, s
       <style>{PL_CSS}</style>
 
       {/* Backdrop: the green artwork, full height, anchored to the bottom so its gold design is always visible */}
-      <Image src="/images/new-green-bg.png" alt="" fill priority sizes="100vw" className="pointer-events-none select-none object-fill" draggable={false} />
+      <Image src="/images/new-green-bg.png" alt="" fill priority sizes="100vw" className="pl-backdrop pointer-events-none select-none" draggable={false} />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/35 to-transparent" />
 
       {/* Heading zone (above the string) */}
