@@ -33,3 +33,4 @@ Edit `lib/data.js` to update hero slides, services, gallery entries, founder con
 ## Deployment
 
 The project is configured for Cloudflare Workers through OpenNext. It does not use a writable filesystem, Vercel Blob, or a CMS/admin backend.
+
