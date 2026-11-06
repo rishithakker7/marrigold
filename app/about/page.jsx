@@ -276,7 +276,7 @@ export default function AboutPage() {
       <section ref={quoteRef} className="grain relative overflow-hidden bg-forest-950 py-32 sm:py-44">
         <motion.div style={{ y: bgY }} className="absolute inset-x-0 -inset-y-[12%]">
           <Image
-            src="/images/new-green-bg-wo-design.png"
+            src="/images/new-green-bg-wo-design.webp"
             alt=""
             fill
             sizes="100vw"
@@ -331,7 +331,7 @@ export default function AboutPage() {
       <section className="mx-auto max-w-7xl px-6 pb-24 sm:px-8 sm:pb-32">
         <Reveal>
           <div className="relative overflow-hidden bg-[#154215] px-8 pb-32 pt-16 text-center sm:px-16 sm:pb-40 sm:pt-24">
-            <Image src="/images/new-green-bg.png" alt="" fill sizes="(min-width:1280px) 1200px, 100vw" className="object-contain object-bottom" />
+            <Image src="/images/new-green-bg.webp" alt="" fill sizes="(min-width:1280px) 1200px, 100vw" className="object-contain object-bottom" />
             <div className="absolute inset-x-0 top-0 h-3/4 bg-gradient-to-b from-forest-950/50 to-transparent" />
             <div className="absolute inset-0 bg-[radial-gradient(60%_90%_at_50%_0%,rgba(203,166,39,0.18),transparent_70%)]" />
             {/* slow drifting glows */}
