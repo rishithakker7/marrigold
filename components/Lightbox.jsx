@@ -51,6 +51,7 @@ export default function Lightbox({ items, index, onClose, onIndex }) {
           role="dialog"
           aria-modal="true"
           aria-label={item.title}
+          onClick={onClose}
         >
           <div className="flex items-center justify-between px-5 py-4 text-cream-100">
             <span className="text-xs tracking-[0.25em] text-forest-200">
@@ -90,6 +91,30 @@ export default function Lightbox({ items, index, onClose, onIndex }) {
                   className="select-none object-contain px-2 sm:px-20"
                   draggable={false}
                   priority
+                  onClick={(event) => {
+                    const image = event.currentTarget;
+                    if (!image.naturalWidth || !image.naturalHeight) {
+                      event.stopPropagation();
+                      return;
+                    }
+                    const rect = image.getBoundingClientRect();
+                    const scale = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+                    const renderedWidth = image.naturalWidth * scale;
+                    const renderedHeight = image.naturalHeight * scale;
+                    const left = rect.left + (rect.width - renderedWidth) / 2;
+                    const top = rect.top + (rect.height - renderedHeight) / 2;
+                    const insideImage =
+                      event.clientX >= left &&
+                      event.clientX <= left + renderedWidth &&
+                      event.clientY >= top &&
+                      event.clientY <= top + renderedHeight;
+
+                    if (insideImage) {
+                      event.stopPropagation();
+                    } else {
+                      onClose();
+                    }
+                  }}
                 />
               </motion.div>
             </AnimatePresence>
@@ -114,7 +139,7 @@ export default function Lightbox({ items, index, onClose, onIndex }) {
             )}
           </div>
 
-          <div className="px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center">
+          <div className="relative z-10 -translate-y-4 px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center sm:translate-y-0">
             <h3 className="font-serif text-2xl font-normal text-cream-100">{item.title}</h3>
             {item.caption && <p className="mx-auto mt-1 max-w-xl text-sm font-normal text-forest-200">{item.caption}</p>}
           </div>
