@@ -106,21 +106,15 @@ export default function Footer() {
             <Link href="/privacy" className="link-underline transition-colors hover:text-gold-300">
               Privacy Policy
             </Link>
-            <span className="inline-flex items-center gap-2 text-forest-400">
-              <span className="text-xs tracking-normal">Developed by</span>
+            <span className="inline-flex items-center gap-1.5 text-forest-400">
+              <span className="text-xs">Developed by</span>
               <a
                 href="https://kantadvertising.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center transition-all duration-200 hover:scale-105 opacity-90 hover:opacity-100"
-                title="Kant Advertising"
-                aria-label="Kant Advertising"
+                className="underline underline-offset-4 decoration-current hover:text-gold-300 transition-colors font-medium tracking-wider"
               >
-                <img
-                  src="/images/kant-blue-n-red.png"
-                  alt="Kant Advertising"
-                  className="h-6 w-auto object-contain"
-                />
+                KANT
               </a>
             </span>
             <span>Mulund West · Mumbai</span>
