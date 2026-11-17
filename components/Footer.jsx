@@ -106,6 +106,23 @@ export default function Footer() {
             <Link href="/privacy" className="link-underline transition-colors hover:text-gold-300">
               Privacy Policy
             </Link>
+            <span className="inline-flex items-center gap-1.5 text-forest-400">
+              <span className="text-[11px] tracking-normal">Developed by</span>
+              <a
+                href="https://kantadvertising.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded bg-white px-1.5 py-0.5 shadow-sm transition-all duration-200 hover:bg-cream-100 hover:scale-105"
+                title="Kant Advertising"
+                aria-label="Kant Advertising"
+              >
+                <img
+                  src="/images/kant-blue-n-red.png"
+                  alt="Kant Advertising"
+                  className="h-3.5 w-auto object-contain"
+                />
+              </a>
+            </span>
             <span>Mulund West · Mumbai</span>
           </span>
         </div>
